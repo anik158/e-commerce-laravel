@@ -21,7 +21,7 @@
     @include('admin.partials.header')
 
     <!-- Main content -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-[#4a5764]">
         <div class="container mx-auto px-6 py-8">
             @yield('content')
         </div>
@@ -30,7 +30,9 @@
 
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     const sidebar = document.getElementById('sidebar');
@@ -75,5 +77,7 @@
         }
     });
 </script>
+
+@stack('js')
 </body>
 </html>

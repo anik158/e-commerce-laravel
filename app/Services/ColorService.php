@@ -11,4 +11,13 @@ class ColorService
         $data = $request->all();
         return  Color::create($data);
     }
+
+    public function update($request, $color){
+        $color->update($request->all());
+        return $color;
+    }
+
+    public function destroy($color){
+        $color->delete();
+    }
 }

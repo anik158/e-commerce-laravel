@@ -77,13 +77,11 @@
                                             <a href="{{ route('admin.colors.edit', $item->id) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400">
                                                 Edit
                                             </a>
-                                            <form action="{{ route('admin.colors.destroy', $item->id) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Are you sure?')" class="text-red-600 hover:text-red-900 dark:text-red-400">
-                                                    Delete
-                                                </button>
-                                            </form>
+                                            <button type="button"
+                                                    data-id="{{ $item->id }}"
+                                                    class="text-red-600 hover:text-red-900 dark:text-red-400 delete-color-btn">
+                                                Delete
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -124,3 +122,72 @@
         </div>
     </section>
 @endsection
+
+@push('js')
+    <script>
+        $(document).ready(function () {
+            $('.delete-color-btn').on('click', function () {
+                const colorId = $(this).data('id');
+                const deleteUrl = "{{ route('admin.colors.destroy', ':id') }}".replace(':id', colorId);
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Deleting...',
+                            text: 'Please wait',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+
+                        $.ajax({
+                            url: deleteUrl,
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                _method: 'DELETE'
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: 'Deleted!',
+                                        text: response.message || 'Color deleted successfully',
+                                        icon: 'success',
+                                        timer: 1500,
+                                        showConfirmButton: false
+                                    }).then(() => {
+                                        window.location.reload();
+
+                                    });
+                                }
+                            },
+                            error: function (xhr) {
+                                let errorMsg = 'Something went wrong!';
+                                if (xhr.responseJSON && xhr.responseJSON.message) {
+                                    errorMsg = xhr.responseJSON.message;
+                                }
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: errorMsg
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

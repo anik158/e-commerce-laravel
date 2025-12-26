@@ -45,7 +45,31 @@ class ColorController extends Controller
 
     public function edit(Color $color)
     {
-        Log::info($color);
+        \Log::info("$color".$color);
         return view('admin.color.add-edit', compact('color'));
     }
+
+    public function update(ColorRequest $request, Color $color)
+    {
+        try{
+            $data = $this->colorService->update($request, $color);
+            return $this->success($data, 'Color updated successfully');
+        }catch (\Exception $exception){
+            Log::error($exception->getMessage());
+            return $this->error('Failed to update color', 500);
+        }
+    }
+
+    public function destroy(Color $color)
+    {
+        try {
+            $this->colorService->destroy($color);
+            return $this->success(null, 'Color deleted successfully');
+        }catch (\Exception $exception){
+            Log::error($exception->getMessage());
+            return $this->error('Failed to delete color', 500);
+        }
+    }
+
+
 }

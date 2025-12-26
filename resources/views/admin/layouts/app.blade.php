@@ -35,6 +35,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+
+    Swal.mixin({
+        heightAuto: false
+    });
     const sidebar = document.getElementById('sidebar');
     const openBtn = document.getElementById('openSidebar');
     const overlay = document.getElementById('sidebarOverlay');

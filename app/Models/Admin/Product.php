@@ -15,7 +15,7 @@ class Product extends Model
     }
 
     public function sizes(): belongsToMany {
-        return $this->belongsToMany(Size::class);
+        return $this->belongsToMany(Size::class, 'size_product');
     }
 
     public function coupons(): belongsToMany {

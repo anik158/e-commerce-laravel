@@ -8,10 +8,8 @@
             <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
                 {{ $edit ? 'Edit Coupon' : 'Add Coupon' }}
             </h2>
-            <a href="{{ route('admin.coupons.index') }}">
-                <div class="bg-white p-2 rounded-md cursor-pointer">
-                    <i class="fa-solid fa-backward"></i> Back
-                </div>
+            <a href="{{ route('admin.coupons.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+                <i class="fa-solid fa-backward"></i> Back
             </a>
         </div>
 
@@ -59,7 +57,7 @@
             </div>
 
             <div class="flex justify-end mt-6">
-                <button type="submit" class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+                <button type="submit" class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-900 focus:outline-none">
                     Save
                 </button>
             </div>

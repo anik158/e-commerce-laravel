@@ -1,21 +1,21 @@
 @extends('admin.layouts.app')
 
-@php $edit = isset($color) && $color; @endphp
+@php $edit = isset($size) && $size; @endphp
 
 @section('content')
     <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
         <div class="flex flex-row justify-between">
             <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
-                {{ $edit ? 'Edit Color' : 'Add Color' }}
+                {{ $edit ? 'Edit Size' : 'Add Size' }}
             </h2>
-            <a href="{{ route('admin.colors.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+            <a href="{{ route('admin.sizes.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
                 <i class="fa-solid fa-backward"></i> Back
             </a>
         </div>
 
-        <form action="{{ $edit ? route('admin.colors.update', $color) : route('admin.colors.store') }}"
+        <form action="{{ $edit ? route('admin.sizes.update', $size) : route('admin.sizes.store') }}"
               method="POST"
-              id="colorForm">
+              id="sizeForm">
             @csrf
             @if($edit)
                 @method('PUT')
@@ -28,7 +28,7 @@
                         id="name"
                         name="name"
                         type="text"
-                        value="{{ old('name', $edit ? $color->name : '') }}"
+                        value="{{ old('name', $edit ? $size->name : '') }}"
                         class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     >
                 </div>
@@ -46,17 +46,17 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $("#colorForm").validate({
+            $("#sizeForm").validate({
                 rules: {
                     name: {
                         required: true,
-                        minlength: 2
+                        minlength: 1
                     }
                 },
                 messages: {
                     name: {
-                        required: "Please enter a color name",
-                        minlength: "Color name must be at least 2 characters"
+                        required: "Please enter a size name",
+                        minlength: "Size name must be at least 1 character"
                     }
                 },
                 submitHandler: function(form) {
@@ -73,7 +73,7 @@
                                     icon: "success"
                                 }).
                                 then(() => {
-                                    window.location.href = "{{ route('admin.colors.index') }}";
+                                    window.location.href = "{{ route('admin.sizes.index') }}";
                                 });
 
                             }

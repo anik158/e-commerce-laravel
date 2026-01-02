@@ -36,11 +36,14 @@
                 <a href="{{route('admin.colors.index')}}" class="flex items-center px-6 py-2 pl-12 text-gray-400 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
                     <span>Color</span>
                 </a>
-                <a href="/cards" class="flex items-center px-6 py-2 pl-12 text-gray-400 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-                    <span>Cards</span>
+                <a href="{{route('admin.sizes.index')}}" class="flex items-center px-6 py-2 pl-12 text-gray-400 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                    <span>Size</span>
                 </a>
-                <a href="/modals" class="flex items-center px-6 py-2 pl-12 text-gray-400 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-                    <span>Modals</span>
+                <a href="{{route('admin.coupons.index')}}" class="flex items-center px-6 py-2 pl-12 text-gray-400 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                    <span>Coupon</span>
+                </a>
+                <a href="{{route('admin.products.index')}}" class="flex items-center px-6 py-2 pl-12 text-gray-400 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                    <span>Product</span>
                 </a>
                 <!-- Add more sub-items here -->
             </div>

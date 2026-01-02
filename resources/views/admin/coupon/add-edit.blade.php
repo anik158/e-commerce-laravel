@@ -1,21 +1,21 @@
 @extends('admin.layouts.app')
 
-@php $edit = isset($color) && $color; @endphp
+@php $edit = isset($coupon) && $coupon; @endphp
 
 @section('content')
     <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
         <div class="flex flex-row justify-between">
             <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
-                {{ $edit ? 'Edit Color' : 'Add Color' }}
+                {{ $edit ? 'Edit Coupon' : 'Add Coupon' }}
             </h2>
-            <a href="{{ route('admin.colors.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+            <a href="{{ route('admin.coupons.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
                 <i class="fa-solid fa-backward"></i> Back
             </a>
         </div>
 
-        <form action="{{ $edit ? route('admin.colors.update', $color) : route('admin.colors.store') }}"
+        <form action="{{ $edit ? route('admin.coupons.update', $coupon) : route('admin.coupons.store') }}"
               method="POST"
-              id="colorForm">
+              id="couponForm">
             @csrf
             @if($edit)
                 @method('PUT')
@@ -28,7 +28,29 @@
                         id="name"
                         name="name"
                         type="text"
-                        value="{{ old('name', $edit ? $color->name : '') }}"
+                        value="{{ old('name', $edit ? $coupon->name : '') }}"
+                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    >
+                </div>
+
+                <div>
+                    <label class="text-gray-700 dark:text-gray-200" for="discount">Discount (%)</label>
+                    <input
+                        id="discount"
+                        name="discount"
+                        type="number"
+                        value="{{ old('discount', $edit ? $coupon->discount : '') }}"
+                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    >
+                </div>
+
+                <div>
+                    <label class="text-gray-700 dark:text-gray-200" for="valid_until">Valid Until</label>
+                    <input
+                        id="valid_until"
+                        name="valid_until"
+                        type="date"
+                        value="{{ old('valid_until', $edit ? $coupon->valid_until : '') }}"
                         class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     >
                 </div>
@@ -46,17 +68,37 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $("#colorForm").validate({
+            $("#couponForm").validate({
                 rules: {
                     name: {
                         required: true,
                         minlength: 2
+                    },
+                    discount: {
+                        required: true,
+                        number: true,
+                        min: 1,
+                        max: 100
+                    },
+                    valid_until: {
+                        required: true,
+                        date: true
                     }
                 },
                 messages: {
                     name: {
-                        required: "Please enter a color name",
-                        minlength: "Color name must be at least 2 characters"
+                        required: "Please enter a coupon name",
+                        minlength: "Coupon name must be at least 2 characters"
+                    },
+                    discount: {
+                        required: "Please enter a discount percentage",
+                        number: "Please enter a valid number",
+                        min: "Discount must be at least 1%",
+                        max: "Discount cannot exceed 100%"
+                    },
+                    valid_until: {
+                        required: "Please select a validity date",
+                        date: "Please enter a valid date"
                     }
                 },
                 submitHandler: function(form) {
@@ -73,7 +115,7 @@
                                     icon: "success"
                                 }).
                                 then(() => {
-                                    window.location.href = "{{ route('admin.colors.index') }}";
+                                    window.location.href = "{{ route('admin.coupons.index') }}";
                                 });
 
                             }

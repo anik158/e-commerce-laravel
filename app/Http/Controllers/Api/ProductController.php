@@ -15,11 +15,14 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with(['colors', 'sizes', 'reviews.users'])
-            ->where('status', 1)
-            ->latest()
+            ->where('status', 1) ->latest()
             ->paginate(12);
-
-        return ProductResource::collection($products);
+        return response()->json([ 'products' => ProductResource::collection($products),
+            'links' => $products->links(),
+            'meta' => [ 'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(), ] ]);
     }
 
     /**

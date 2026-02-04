@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $productQuery = Product::with(['colors', 'sizes', 'reviews']);
+        $productQuery = Product::with([ 'reviews']);
 
 
 //        Filter by color

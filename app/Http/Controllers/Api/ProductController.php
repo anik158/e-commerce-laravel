@@ -55,13 +55,20 @@ class ProductController extends Controller
     /**
      * Display the specified product.
      */
-    public function show($slug)
+    public function show($id)
     {
-        $product = Product::with(['colors', 'sizes', 'reviews.users'])
-            ->where('slug', $slug)
-            ->where('status', 1)
-            ->firstOrFail();
-
-        return new ProductResource($product);
+        try{
+            $product = Product::with(['colors', 'sizes', 'reviews.users'])
+                ->where('id', $id)
+                ->firstOrFail();
+            if($product)
+            {
+                return new ProductResource($product);
+            }else{
+                return response()->json(["message" => "Product not found"], 404);
+            }
+        }catch (\Exception $exception){
+            return response()->json(["error"=>true, "message"=>$exception->getMessage()], 500);
+        }
     }
 }
